@@ -109,7 +109,8 @@ $(function () {
 
     
     // 读取本地存储数组localStorage的封装  key存储数据使用的键
-    function loadDate(key){
+    // 已引用了kits
+    /* function loadDate(key){
         let str = localStorage.getItem(key);
         let arr = JSON.parse(str);//JS格式的字符串转换为js对象(也可能是数组)
         // 判断 返回值是数组，如果不存在就返回一个空数组
@@ -117,7 +118,7 @@ $(function () {
             arr = [];
         }
         return arr;
-    }
+    } */
 
 
     // 点击加入购物车功能
