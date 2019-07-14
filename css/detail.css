@@ -325,6 +325,6 @@
   position: absolute;
   left: 400px;
   top: 0;
-  /* display: none; */
+  display: none;
   z-index: 998;
 }
