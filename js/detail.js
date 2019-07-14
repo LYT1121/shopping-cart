@@ -1,12 +1,12 @@
 // 用一个入口函数包起来
 $(function () {
     // 根据浏览器地址栏的数据，获取id
-    let pID = parseInt(location.search.substring(4));
+    let id = parseInt(location.search.substring(4));
     // 储存一个对象，先设置为null无效的
     let obje = null;
     // 根据id获取对应的数据信息 遍历
     phoneData.forEach(function (e, i) {
-        if (e.pID === pID) {
+        if (e.pID === id) {
             obje = e;
             // 筛选出了对应的数据 -把数据显示在页面对应的位置
             // 修改元素的属性 
@@ -143,7 +143,7 @@ $(function () {
         // 解决方法：判断当前产品的id，是否出现过在localStorage本地存储里面了
         // find 方法，如果找到元素，就会返回该元素，如果没有找到，就会返回undefined，用此来判断id是否出现过
         let isID = arr.find(function(e){
-            return e.pID === IDBCursor;
+            return e.pID === id;
         });
         // 判断 find的返回值是否是undefined
         if(isID !== undefined){

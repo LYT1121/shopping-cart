@@ -10,15 +10,15 @@ $(()=>{
         // 遍历数组，生成结构
         // 先声明一个空结构
         let html = '';
-        arr.forEach(element => {
-            html += `<div class="item" data-id="${element.pID}">
+        arr.forEach(e => {
+            html += `<div class="item" data-id="${e.pID}">
             <div class="row">
               <div class="cell col-1 row">
                 <div class="cell col-1">
                   <input type="checkbox" class="item-ck" checked="">
                 </div>
                 <div class="cell col-4">
-                  <img src="${element.imgSrc}" alt="">
+                  <img src="${e.imgSrc}" alt="">
                 </div>
               </div>
               <div class="cell col-4 row">
@@ -26,7 +26,7 @@ $(()=>{
               </div>
               <div class="cell col-1 tc lh70">
                 <span>￥</span>
-                <em class="price">${element.price}</em>
+                <em class="price">${e.price}</em>
               </div>
               <div class="cell col-1 tc lh70">
                 <div class="item-count">
@@ -37,7 +37,7 @@ $(()=>{
               </div>
               <div class="cell col-1 tc lh70">
                 <span>￥</span>
-                <em class="computed">${element.price * element.number}</em>
+                <em class="computed">${e.price * e.number}</em>
               </div>
               <div class="cell col-1">
                 <a href="javascript:void(0);" class="item-del">从购物车中移除</a>
@@ -53,4 +53,26 @@ $(()=>{
         $('.cart-header').removeClass('hidden');
         $('.total-of').removeClass('hidden');
     }
+
+    // 计算总和和总价
+    function ctcam(){
+      // 算出总价里面是总数和总价
+      // 根据选中的多选框，得到选中的商品的id
+      let totalCount = 0;
+      let totalMoney = 0;
+      $('.item-list input[type=checkbox]:checked').each((i,e)=>{
+        let id = parseInt($(e).parents('.item').attr('data-id'));
+        arr.forEach(e=>{
+          if(id===e.pID){
+            // 勾选在本地存储中的数据
+            totalCount+=e.number;
+            totalMoney+=e.number * e.price;
+          }
+        })
+      })
+      // 修改数量和总价
+      $('.selected').text(totalCount);
+      $('.total-money').text(totalMoney);
+    }
+    ctcam();
 })
