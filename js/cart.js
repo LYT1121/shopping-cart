@@ -124,7 +124,7 @@ $(() => {
     $(this).parents('.item').find('.computed').text(obj.price * obj.number);
   })
 
-  $(".item-list").on('click', '.reduce', function (){
+  $(".item-list").on('click', '.reduce', function () {
     let oldVal = parseInt($(this).siblings('input').val());
     // 如果当前值已经是1了，就不能在点击了
     if (oldVal === 1) {
@@ -144,11 +144,72 @@ $(() => {
     obj.number = oldVal;
     // 还要覆盖回本地数据
     let jsonStr = JSON.stringify(arr);
-    localStorage.setItem('shopCartData', jsonStr);
+    localStorage.setItem('shopCarts', jsonStr);
     // 重新计算总数和总价
     ctcam();
     $(this).parents('.item').find('.computed').text(obj.price * obj.number);
   })
+  // 实现删除
+  $('.item-list').on('click','.item-del',function(){
+    // 因为我们的删除的动作是在点击确定之后进行，点击确定是另外一个函数了，该函数里面的this已经不是移除按钮，我们可以在这里先保存一个this
+    let _this = this;
+    // 弹出一个确认框
+    $("#dialog-confirm").dialog({
+      resizable: false,
+      height: 140,
+      modal: true,
+      buttons: {
+        "确认": function () {
+          $(this).dialog("close");
+          // 把对应的商品删除
+          // 把对应的结构移除
+          // console.log(_this);
+          $(_this).parents('.item').remove();
+          // 把本地数据移除
+          // 我们现在需要根据id获取本地存储里面的数据
+          let id = parseInt($(_this).parents('.item').attr('data-id'));
+          // console.log(id);
+          // 把对应id的数据读取出来
+          // let obj = arr.find(e => {
+          //   return e.pID === id;
+          // });
+          // // console.log(obj);
+          // // 把对应的id的数据从本地存储里面移除
+          // // arr.splice(从哪里开始删除,总共删除多少个);
+          // let index = arr.indexOf(obj);
+          // console.log(index);
 
+          // 在h5里面的，数组新增了一个方法，获取满足条件的元素的索引          
+          let index = arr.findIndex((e)=>{
+            return e.pID === id
+          })
+          // console.log(index);
+
+          arr.splice(index, 1);
+          // 把数据覆盖回本地
+          let jsonStr = JSON.stringify(arr);
+          localStorage.setItem('shopCarts', jsonStr);
+        },
+        "取消": function () {
+          $(this).dialog("close");
+        }
+      }
+    });
+  })
+  // 弹出一个jqueryUI的确认框
+  // $( "#dialog-confirm" ).dialog({
+  //   resizable: false,
+  //   height:140,
+  //   modal: true,
+  //   buttons: {
+  //     "确认": function() {
+  //       $( this ).dialog( "close" );
+  //       // 把对应的商品删除
+  //     },
+  //     "取消": function() {
+  //       $( this ).dialog( "close" );
+  //     }
+  //   }
+  // });
 
 })

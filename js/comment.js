@@ -7,8 +7,8 @@ $(()=>{
     let arr = kits.loadArray('shopCarts');
     // 直接计算出总的商品数量
     let total = 0;
-    arr.forEach(element => {
-        total += element.number
+    arr.forEach(e => {
+        total += e.number
     });
     // 修改到右上角的购物车里面
     $('.count').text(total);
